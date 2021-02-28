@@ -15,25 +15,6 @@ protected:
 public:
     TVector(); // Конструктор по умолчанию
     TVector(int n); // Конструктор с заданным кол-вом элементов
-
-    //        //конструктор по xyz
-    //        int x, y, z;
-    //        TVector (int x0, int y0, int z0) {
-    //            x = x0;
-    //            y = y0;
-    //            z = z0;
-
-    //            this->n = 3;
-    //            this->resize(3);
-
-    //            TVector a(3);
-    //            a[0] = x0;
-    //            a[1] = y0;
-    //            a[2] = z0;
-
-    //            (*this) = a;
-    //        }
-
     TVector(const TVector& rvalue); // Конструктор копий
     TVector& operator = (const TVector& rvalue); // Оператор присваивания
     virtual ~TVector(); // Деструктор
