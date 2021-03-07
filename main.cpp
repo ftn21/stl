@@ -103,6 +103,9 @@ int main(int argc, char *argv[]) {
     sats[4].dT = 78.206308;
     sats[5].dT = -409.011384;
 
+    //поправка по времени
+    double Rdcv = 0;
+
     //последовательные приближения
     for (quint8 it = 0; it < 8; it++) {
 
@@ -121,16 +124,12 @@ int main(int argc, char *argv[]) {
         TMatrix V(6, 1);
 
         //вращение приемника вместе с землёй
-
-        if (it == 7) {
-            cout << endl << "gg is coming" << endl;
-        }
-
+        TVector V_e(3);
         TVector Ve(3);
-        Ve[0] = 0;
-        Ve[1] = 0;
-        Ve[2] = 7.2921151467 / 100000;
-        Ve = Ve ^ P;
+        V_e[0] = 0;
+        V_e[1] = 0;
+        V_e[2] = 7.2921151467 / 100000;
+        Ve = V_e ^ P;
 
         //расстояние приемник-спутник
         vec3 R[6];
@@ -142,17 +141,21 @@ int main(int argc, char *argv[]) {
         TVector Vr(6);
 
         for (int i = 0; i < 6; i++) {
-            sats[i].P1 = sats[i].C1 + sats[i].dT*(C / 1000000); // - Rdcv
-            sats[i].dt = sats[i].P1 / C;
+            sats[i].P1 = sats[i].C1 + sats[i].dT*(C / 1000000); // - Rdcv;
+            sats[i].dt = sats[i].P1 / C; //время полета сигнала
 
             R[i].xyz = sats[i].xyz - P;
             e[i].xyz = R[i].xyz.norm();
 
-            Vr[i] = sats[i].D1*0.1902 - Ve*e[i].xyz;
+            double b = (Ve*R[i].xyz) / R[i].xyz.length();
 
-            V(i, 0) = sats[i].C1 - r[i].xyz.length() + sats[i].dT*(C/1000000) - (sats[i].D1*0.1902)*sats[i].dt;
-            //V(i, 0) = sats[i].P1 - R[i].xyz.length() - (sats[i].D1*0.1902)*sats[i].dt;
-            //V(i, 0) = sats[i].P1 - (R[i].xyz.length() + Vr[i]*sats[i].dt);
+            //Vr[i] = sats[i].D1*0.1902 - Ve*e[i].xyz;
+            Vr[i] = sats[i].D1*0.1902 - b;
+
+            if (i == 6) cout << endl;
+
+            //V(i, 0) = sats[i].C1 - r[i].xyz.length() + sats[i].dT*(C/1000000) - (sats[i].D1*0.1902)*sats[i].dt;
+            V(i, 0) = sats[i].P1 - (R[i].xyz.length() + Vr[i]*sats[i].dt);
         }
 
         //MHK: dV = (H^t * H)^(-1) * H^t * V
@@ -166,6 +169,7 @@ int main(int argc, char *argv[]) {
         double dx = dV(0, 0);
         double dy = dV(1, 0);
         double dz = dV(2, 0);
+        Rdcv = dV(3, 0);
 
         //новое приближение
         P[0] += dx;
@@ -176,19 +180,28 @@ int main(int argc, char *argv[]) {
             break;
         }
         else {
-            cout << "calculating. . .";
+            //cout << "calculating. . ." << endl;
         }
+
+        TVector approx_pos (3);
+        approx_pos[0] = 2849830.5060;
+        approx_pos[1] = 2186822.2813;
+        approx_pos[2] = 5252937.0124;
+
+        TVector error = P - approx_pos;
+
+        cout << "ошибка = " << error.length() << endl;
 
     }
 
-    TVector approx_pos (3);
-    approx_pos[0] = 2849830.5060;
-    approx_pos[1] = 2186822.2813;
-    approx_pos[2] = 5252937.0124;
+//    TVector approx_pos (3);
+//    approx_pos[0] = 2849830.5060;
+//    approx_pos[1] = 2186822.2813;
+//    approx_pos[2] = 5252937.0124;
 
-    TVector error = P - approx_pos;
+//    TVector error = P - approx_pos;
 
-    cout << endl << "ошибка = " << error.length() << endl << endl;
+//    cout << endl << "ошибка = " << error.length() << endl << endl;
 
     return a.exec();
 }
