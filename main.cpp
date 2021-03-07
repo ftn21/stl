@@ -16,8 +16,8 @@ using namespace MyLinearAlgebra;
 struct sattelite {
 public:
     string prn;
-    TVector xyz; //координаты
-    sattelite() : xyz(3) {};
+    TVector ecef; //координаты
+    sattelite() : ecef(3) {};
     double C1,  //псевдодальность [м]
     dt,         //оценка времени полета сигнала
     dT,         //сдвиг часов [мкс]
@@ -55,29 +55,29 @@ int main(int argc, char *argv[]) {
     P[1] = 0;
     P[2] = 0;
 
-    sats[0].xyz[0] = 16678843.241;
-    sats[0].xyz[1] = -2634637.336;
-    sats[0].xyz[2] = 20579559.047;
+    sats[0].ecef[0] = 16678843.241;
+    sats[0].ecef[1] = -2634637.336;
+    sats[0].ecef[2] = 20579559.047;
 
-    sats[1].xyz[0] = 13020628.571;
-    sats[1].xyz[1] = -12527567.852;
-    sats[1].xyz[2] = 19099436.863;
+    sats[1].ecef[0] = 13020628.571;
+    sats[1].ecef[1] = -12527567.852;
+    sats[1].ecef[2] = 19099436.863;
 
-    sats[2].xyz[0] = -2555568.528;
-    sats[2].xyz[1] = 16762578.066;
-    sats[2].xyz[2] = 20311833.019;
+    sats[2].ecef[0] = -2555568.528;
+    sats[2].ecef[1] = 16762578.066;
+    sats[2].ecef[2] = 20311833.019;
 
-    sats[3].xyz[0] = 16181563.666;
-    sats[3].xyz[1] = -957262.138;
-    sats[3].xyz[2] = 21758956.397;
+    sats[3].ecef[0] = 16181563.666;
+    sats[3].ecef[1] = -957262.138;
+    sats[3].ecef[2] = 21758956.397;
 
-    sats[4].xyz[0] = -1405082.371;
-    sats[4].xyz[1] = 15628413.976;
-    sats[4].xyz[2] = 21394716.744;
+    sats[4].ecef[0] = -1405082.371;
+    sats[4].ecef[1] = 15628413.976;
+    sats[4].ecef[2] = 21394716.744;
 
-    sats[5].xyz[0] = 20637508.416;
-    sats[5].xyz[1] = 8906797.175;
-    sats[5].xyz[2] = 14267852.574;
+    sats[5].ecef[0] = 20637508.416;
+    sats[5].ecef[1] = 8906797.175;
+    sats[5].ecef[2] = 14267852.574;
 
     //псевдодальность [м]
     sats[0].C1 = 21293946.348;
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 
         vec3 r[6];
         for (int i = 0; i < 6; i++) {
-            r[i].xyz = sats[i].xyz - P;
+            r[i].xyz = sats[i].ecef - P;
             for (int j = 0; j < 3; j++) {
                 H(i, j) = - r[i].xyz[j] / r[i].xyz.length();
             }
@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
             sats[i].P1 = sats[i].C1 + sats[i].dT*(C / 1000000); // - Rdcv;
             sats[i].dt = sats[i].P1 / C; //время полета сигнала
 
-            R[i].xyz = sats[i].xyz - P;
+            R[i].xyz = sats[i].ecef - P;
             e[i].xyz = R[i].xyz.norm();
 
             double b = (Ve*R[i].xyz) / R[i].xyz.length();
@@ -180,10 +180,10 @@ int main(int argc, char *argv[]) {
             break;
         }
         else {
-            //cout << "calculating. . ." << endl;
+            cout << "calc . . . x" << int(it) + 1 << endl;
         }
 
-        TVector approx_pos (3);
+        /* TVector approx_pos (3);
         approx_pos[0] = 2849830.5060;
         approx_pos[1] = 2186822.2813;
         approx_pos[2] = 5252937.0124;
@@ -191,17 +191,40 @@ int main(int argc, char *argv[]) {
         TVector error = P - approx_pos;
 
         cout << "ошибка = " << error.length() << endl;
-
+        */
     }
 
-//    TVector approx_pos (3);
-//    approx_pos[0] = 2849830.5060;
-//    approx_pos[1] = 2186822.2813;
-//    approx_pos[2] = 5252937.0124;
+    //широта (ф)
+    double lat = asin( P[2] / P.length() );
+    //долгота
+    double lon = atan2(P[1], P[0]);
 
-//    TVector error = P - approx_pos;
+    cout << endl << "широта: " << lat << endl << "долгота: " << lon;
 
-//    cout << endl << "ошибка = " << error.length() << endl << endl;
+    //матрица перехода из ECEF в ENU
+    TMatrix ENU (3, 3);
+    ENU(0, 0) = -sin(lon);          ENU(0, 1) = cos(lon);           ENU(0, 2) = 0;
+    ENU(1, 0) = -sin(lat)*cos(lon); ENU(1, 1) = -sin(lat)*sin(lon); ENU(1, 2) = cos(lat);
+    ENU(2, 0) = cos(lat)*cos(lon);  ENU(2, 1) = cos(lat)*sin(lon);  ENU(2, 2) = sin(lat);
+
+    cout << endl;
+    for (int i = 0; i < 6; i++) {
+        TVector e_enu = ENU * (sats[i].ecef - P);
+        double az = atan2(e_enu[0], e_enu[1]);
+        double el = asin(e_enu[2] / e_enu.length());
+
+        cout << sats[i].prn << ":   az = " << int(az*180/pi) << "    el = " << int(el*180/pi) << endl;
+    }
+
+    //ошибка
+    TVector approx_pos (3);
+    approx_pos[0] = 2849830.5060;
+    approx_pos[1] = 2186822.2813;
+    approx_pos[2] = 5252937.0124;
+
+    TVector error = P - approx_pos;
+
+    cout << endl << "ошибка = " << error.length() << endl << endl;
 
     return a.exec();
 }
