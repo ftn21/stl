@@ -1,0 +1,4 @@
+/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/rebuild_cache.dir
+/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/edit_cache.dir
+/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/linalg.dir
+/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/main.dir

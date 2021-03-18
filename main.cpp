@@ -1,11 +1,12 @@
-#include <QCoreApplication>
 #include <iostream>
 #include "linalg.h"
 #include <cstring>
 #include <math.h>
+#include <fstream>
+#include <bitset>   // заголовочный файл битовых полей
+#include <iomanip>  // для манипулятора setw()
 
-#include <QVector>
-#include <QDebug>
+#include <vector>
 
 #define pi 3.141592653589793
 using namespace std;
@@ -31,6 +32,9 @@ public:
     vec3() : xyz(3) {};
 };
 
+uint32_t bit32u(const uint8_t *buff, int32_t pos, int32_t len);
+int32_t bit32s(const uint8_t *buff, int32_t pos, int32_t len);
+
 const double C = 299792458; // скорость света [м/с]
 
 //точка
@@ -40,7 +44,23 @@ TVector P (3);
 sattelite sats[6];
 
 int main(int argc, char *argv[]) {
-    QCoreApplication a(argc, argv);
+
+    //read file.rtcm
+    ifstream rtcm_strm;
+    string filename = "1019.rtcm";
+    rtcm_strm.open(filename, /*ios::in |*/ ios::binary);
+
+    if (!rtcm_strm.is_open()) {
+        cout << "error opening " << filename << endl;
+    }
+    else {
+        cout << "file " << filename << " is open" << endl;
+    }
+
+    char preamble[2] = {};
+    rtcm_strm.read((char *)&preamble, 2);
+    rtcm_strm.close();
+    cout << preamble << "\n";
 
     //prn
     sats[0].prn = "S08";
@@ -107,7 +127,7 @@ int main(int argc, char *argv[]) {
     double Rdcv = 0;
 
     //последовательные приближения
-    for (quint8 it = 0; it < 8; it++) {
+    for (uint8_t it = 0; it < 8; it++) {
 
         TMatrix H (6,4);
 
@@ -227,5 +247,18 @@ int main(int argc, char *argv[]) {
 
     cout << endl << "ошибка = " << error.length() << endl << endl;
 
-    return a.exec();
+}
+
+uint32_t bit32u(const uint8_t *buff, int32_t pos, int32_t len)
+{
+    uint32_t bits=0;
+    for (int32_t i=pos;i<pos+len;i++) bits=(bits<<1)+((buff[i/8]>>(7-i%8))&1u);
+    return bits;
+}
+
+int32_t bit32s(const uint8_t *buff, int32_t pos, int32_t len)
+{
+    uint32_t bits= bit32u(buff,pos,len);
+    if (len<=0||32<=len||!(bits&(1u<<(len-1)))) return int32_t(bits);
+    return int(bits|(~0u<<len)); /* extend sign */
 }
