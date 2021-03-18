@@ -16,13 +16,13 @@ using namespace MyLinearAlgebra;
 struct sattelite {
 public:
     string prn;
-    TVector ecef; //координаты
+    TVector ecef; //координаты в ECEF
     sattelite() : ecef(3) {};
-    double C1,  //псевдодальность [м]
-    dt,         //оценка времени полета сигнала
-    dT,         //сдвиг часов [мкс]
-    D1,         //доплер [Гц]
-    P1;         //псевдодальность с коррекцией часов
+    double C1,    //псевдодальность [м]
+    dt,           //оценка времени полета сигнала
+    dT,           //сдвиг часов [мкс]
+    D1,           //доплер [Гц]
+    P1;           //псевдодальность с коррекцией часов
 };
 
 class vec3 {
@@ -209,9 +209,10 @@ int main(int argc, char *argv[]) {
 
     cout << endl;
     for (int i = 0; i < 6; i++) {
-        TVector e_enu = ENU * (sats[i].ecef - P);
+        TVector e = (sats[i].ecef - P).norm();
+        TVector e_enu = ENU * e;
         double az = atan2(e_enu[0], e_enu[1]);
-        double el = asin(e_enu[2] / e_enu.length());
+        double el = asin(e_enu[2]);
 
         cout << sats[i].prn << ":   az = " << int(az*180/pi) << "    el = " << int(el*180/pi) << endl;
     }

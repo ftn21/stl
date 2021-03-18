@@ -322,10 +322,12 @@ TVector TMatrix::operator * (const TVector& arg) const{
         throw 1;
 #endif
     TVector V(n);
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++) {
+        V[i] = 0;
         for (int j = 0; j < m; j++) {
             V[i] = V[i] + arg[j]*data[i][j];
         }
+    }
     return V;
 }
 TMatrix operator * (double lvalue, const TMatrix& rvalue) {
