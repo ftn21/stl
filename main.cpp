@@ -3,8 +3,8 @@
 #include <cstring>
 #include <math.h>
 #include <fstream>
-#include <bitset>   // заголовочный файл битовых полей
-#include <iomanip>  // для манипулятора setw()
+#include <bitset>  
+#include <iomanip> 
 
 #include <vector>
 
@@ -45,16 +45,16 @@ sattelite sats[6];
 
 int main(int argc, char *argv[]) {
 
-    //read file.rtcm
+    //read rtcm file
     ifstream rtcm_strm;
     string filename = "1019.rtcm";
-    rtcm_strm.open(filename, /*ios::in |*/ ios::binary);
+    rtcm_strm.open(filename, ios::in | ios::binary);
 
     if (!rtcm_strm.is_open()) {
         cout << "error opening " << filename << endl;
     }
     else {
-        cout << "file " << filename << " is open" << endl;
+        cout << "file " << filename << " is opened" << endl;
     }
 
     char preamble[2] = {};
