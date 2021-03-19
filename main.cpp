@@ -45,7 +45,6 @@ sattelite sats[6];
 
 int main(int argc, char *argv[]) {
 
-    //read rtcm file
     ifstream rtcm_strm;
     string filename = "1019.rtcm";
     rtcm_strm.open(filename, ios::in | ios::binary);
@@ -54,7 +53,7 @@ int main(int argc, char *argv[]) {
         cout << "error opening " << filename << endl;
     }
     else {
-        cout << "file " << filename << " is opened" << endl;
+        cout << "file " << filename << " is open" << endl;
     }
 
     char preamble[2] = {};
