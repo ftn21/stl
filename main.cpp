@@ -168,12 +168,10 @@ int main(int argc, char *argv[]) {
 
             double b = (Ve*R[i].xyz) / R[i].xyz.length();
 
-            //Vr[i] = sats[i].D1*0.1902 - Ve*e[i].xyz;
             Vr[i] = sats[i].D1*0.1902 - b;
 
             if (i == 6) cout << endl;
 
-            //V(i, 0) = sats[i].C1 - r[i].xyz.length() + sats[i].dT*(C/1000000) - (sats[i].D1*0.1902)*sats[i].dt;
             V(i, 0) = sats[i].P1 - (R[i].xyz.length() + Vr[i]*sats[i].dt);
         }
 
