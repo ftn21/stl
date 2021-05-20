@@ -193,10 +193,10 @@ public:
     int prn;
     TVector ecef; //координаты в ECEF
     sattelite() : ecef(3){};
-    double C1, //псевдодальность [м]
-        dt,    //оценка времени полета сигнала
-        dT,    //сдвиг часов [мкс]
-        P1;    //псевдодальность с коррекцией часов
+    double C1; //псевдодальность [м]
+    double dt;    //оценка времени полета сигнала
+    double dT;    //сдвиг часов [мкс]
+    double P1;    //псевдодальность с коррекцией часов
 };
 
 class vec3
@@ -212,7 +212,7 @@ const double C = 299792458; // скорость света [м/с]
 TVector P(3);
 
 //спутники
-const int sat_num = 5;
+const int sat_num = 6;
 sattelite sats[sat_num];
 
 int main(int argc, char *argv[])
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
     }
 
     // read data
-    rtcm1019_pack rtcm_msg[6];
+    rtcm1019_pack rtcm_msg[8];
     vector<uint8_t> buf(istreambuf_iterator<char>(rtcm_st6), {});
 
     int32_t s = 67;
@@ -322,31 +322,36 @@ int main(int argc, char *argv[])
     /* 6 blocks | 6*74  bits*/
     for (int i = 0; i < 6; i++)
     {
-        rtcm02_msg[i].satellite_id = bit32u(&buf02[0], 88 + i * 74, 6);
-        rtcm02_msg[i].L1_pseudorange = bit32u(&buf02[0], 95 + i * 74, 24);
-        rtcm02_msg[i].L1_ambiguity = bit32u(&buf02[0], 146 + i * 74, 8);
+        rtcm02_msg[i].satellite_id = bit32u(&buf02[0], 88 + i*74, 6);
+        rtcm02_msg[i].L1_pseudorange = bit32u(&buf02[0], 95 + i*74, 24);
+        rtcm02_msg[i].L1_ambiguity = bit32u(&buf02[0], 146 + i*74, 8);
         rtcm02_msg[i].C1 = rtcm02_msg[i].L1_pseudorange * 0.02 + rtcm02_msg[i].L1_ambiguity * light_speed_m;
     }
 
     for (int i = 0; i < sat_num; i++)
     {
         sats[i].prn = rtcm02_msg[i].satellite_id;
+        sats[i].C1 = rtcm02_msg[i].C1;
     }
 
-    xyz_coord res[5];
+    xyz_coord res[6];
     res[0] = algorithm(rtcm_msg[0], rtcm02_msg[3], tow);
     res[1] = algorithm(rtcm_msg[1], rtcm02_msg[5], tow);
     res[2] = algorithm(rtcm_msg[3], rtcm02_msg[0], tow);
     res[3] = algorithm(rtcm_msg[4], rtcm02_msg[1], tow);
     res[4] = algorithm(rtcm_msg[5], rtcm02_msg[2], tow);
+    res[5] = algorithm(rtcm_msg[6], rtcm02_msg[4], tow);
 
     //ecef
-    for (int i = 0; i < sat_num; i++)
-    {
-        sats[i].prn = res[i].sat_id;
-        sats[i].ecef[0] = res[i].x;
-        sats[i].ecef[1] = res[i].y;
-        sats[i].ecef[2] = res[i].z;
+    for (int i = 0; i < sat_num; i++) {
+        for (int j = 0; j < sat_num; j++)
+        {
+            if (sats[i].prn == res[j].sat_id) {
+                sats[i].ecef[0] = res[j].x;
+                sats[i].ecef[1] = res[j].y;
+                sats[i].ecef[2] = res[j].z;
+            }
+        }
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -357,11 +362,11 @@ int main(int argc, char *argv[])
     P[2] = 0;
 
     //псевдодальность [м]
-    sats[0].C1 = rtcm02_msg[3].C1; //3
+    /*sats[0].C1 = rtcm02_msg[3].C1; //3
     sats[1].C1 = rtcm02_msg[5].C1; //5
     sats[2].C1 = rtcm02_msg[0].C1; //0
     sats[3].C1 = rtcm02_msg[1].C1; //1
-    sats[4].C1 = rtcm02_msg[2].C1; //2
+    sats[4].C1 = rtcm02_msg[2].C1; //2 */
 
     /*   //сдвиг часов [мкс]
     sats[0].dT = -50.014071;
@@ -573,13 +578,14 @@ xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow)
     }
     dTs = pack19.a_f0 + pack19.a_f1 * dTs + pack19.a_f2 * dTs * dTs;
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 6; i++)
     {
-        if (sats[i].prn == result.sat_id)
-        {
-            sats[i].dT = dTs;
-        }
+            if (sats[i].prn == result.sat_id)
+            {
+                sats[i].dT = dTs*1000000;
+            }
     }
+    
 
     //individual satellite time
     double tbias = t - dTs;
@@ -600,6 +606,7 @@ xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow)
         Ek = E;
         E = M + pack19.e * sin(Ek);
     }
+    Ek = E; //но это не точно.
 
     double v = atan2(sqrt(1.0 - pack19.e * pack19.e) * sin(E), cos(E) - pack19.e); //true anomaly
     double Fi = v + pack19.omega;                                                  // v + omega

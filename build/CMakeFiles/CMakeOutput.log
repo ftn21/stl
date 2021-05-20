@@ -1,6 +1,6 @@
-The system is: Linux - 5.4.0-67-generic - x86_64
+The system is: Linux - 5.4.0-73-generic - x86_64
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: /usr/bin/c++ 
+Compiler: /usr/bin/x86_64-linux-gnu-g++-7 
 Build flags: 
 Id flags:  
 
@@ -15,30 +15,30 @@ The CXX compiler identification is GNU, found in "/home/ftn21/Documents/MAI/6sem
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_9228d/fast"
-/usr/bin/make -f CMakeFiles/cmTC_9228d.dir/build.make CMakeFiles/cmTC_9228d.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_384bd/fast"
+/usr/bin/make -f CMakeFiles/cmTC_384bd.dir/build.make CMakeFiles/cmTC_384bd.dir/build
 make[1]: вход в каталог «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
-Building CXX object CMakeFiles/cmTC_9228d.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTC_9228d.dir/testCXXCompiler.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_9228d
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9228d.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_9228d.dir/testCXXCompiler.cxx.o  -o cmTC_9228d 
+Building CXX object CMakeFiles/cmTC_384bd.dir/testCXXCompiler.cxx.o
+/usr/bin/x86_64-linux-gnu-g++-7     -o CMakeFiles/cmTC_384bd.dir/testCXXCompiler.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_384bd
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_384bd.dir/link.txt --verbose=1
+/usr/bin/x86_64-linux-gnu-g++-7       -rdynamic CMakeFiles/cmTC_384bd.dir/testCXXCompiler.cxx.o  -o cmTC_384bd 
 make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_37eb9/fast"
-/usr/bin/make -f CMakeFiles/cmTC_37eb9.dir/build.make CMakeFiles/cmTC_37eb9.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_a53e4/fast"
+/usr/bin/make -f CMakeFiles/cmTC_a53e4.dir/build.make CMakeFiles/cmTC_a53e4.dir/build
 make[1]: вход в каталог «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
-Building CXX object CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_37eb9
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_37eb9.dir/link.txt --verbose=1
-/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_37eb9 
+Building CXX object CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/x86_64-linux-gnu-g++-7     -o CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_a53e4
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a53e4.dir/link.txt --verbose=1
+/usr/bin/x86_64-linux-gnu-g++-7      -v -rdynamic CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_a53e4 
 Using built-in specs.
-COLLECT_GCC=/usr/bin/c++
+COLLECT_GCC=/usr/bin/x86_64-linux-gnu-g++-7
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
 OFFLOAD_TARGET_NAMES=nvptx-none
 OFFLOAD_TARGET_DEFAULT=1
@@ -48,9 +48,9 @@ Thread model: posix
 gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_37eb9' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccSn4Nh7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_37eb9 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_37eb9' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_a53e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVZNn3l.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_a53e4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_a53e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
 make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
 
 
@@ -58,16 +58,16 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_37eb9/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_37eb9.dir/build.make CMakeFiles/cmTC_37eb9.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_a53e4/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_a53e4.dir/build.make CMakeFiles/cmTC_a53e4.dir/build]
   ignore line: [make[1]: вход в каталог «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»]
-  ignore line: [Building CXX object CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_37eb9]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_37eb9.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_37eb9 ]
+  ignore line: [Building CXX object CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/x86_64-linux-gnu-g++-7     -o CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_a53e4]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a53e4.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/x86_64-linux-gnu-g++-7      -v -rdynamic CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_a53e4 ]
   ignore line: [Using built-in specs.]
-  ignore line: [COLLECT_GCC=/usr/bin/c++]
+  ignore line: [COLLECT_GCC=/usr/bin/x86_64-linux-gnu-g++-7]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
   ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
   ignore line: [OFFLOAD_TARGET_DEFAULT=1]
@@ -77,13 +77,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_37eb9' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccSn4Nh7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_37eb9 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_a53e4' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVZNn3l.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_a53e4 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccSn4Nh7.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccVZNn3l.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -102,7 +102,7 @@ Parsed CXX implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_37eb9] ==> ignore
+    arg [cmTC_a53e4] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -114,7 +114,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_37eb9.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_a53e4.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -142,14 +142,14 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
 Change Dir: /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_2464c/fast"
-/usr/bin/make -f CMakeFiles/cmTC_2464c.dir/build.make CMakeFiles/cmTC_2464c.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_70b44/fast"
+/usr/bin/make -f CMakeFiles/cmTC_70b44.dir/build.make CMakeFiles/cmTC_70b44.dir/build
 make[1]: вход в каталог «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
-Building CXX object CMakeFiles/cmTC_2464c.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++1z -o CMakeFiles/cmTC_2464c.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_2464c
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2464c.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_2464c.dir/feature_tests.cxx.o  -o cmTC_2464c 
+Building CXX object CMakeFiles/cmTC_70b44.dir/feature_tests.cxx.o
+/usr/bin/x86_64-linux-gnu-g++-7    -std=c++1z -o CMakeFiles/cmTC_70b44.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_70b44
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_70b44.dir/link.txt --verbose=1
+/usr/bin/x86_64-linux-gnu-g++-7       -rdynamic CMakeFiles/cmTC_70b44.dir/feature_tests.cxx.o  -o cmTC_70b44 
 make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
 
 
@@ -215,14 +215,14 @@ make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_s
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_bd957/fast"
-/usr/bin/make -f CMakeFiles/cmTC_bd957.dir/build.make CMakeFiles/cmTC_bd957.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_72f1e/fast"
+/usr/bin/make -f CMakeFiles/cmTC_72f1e.dir/build.make CMakeFiles/cmTC_72f1e.dir/build
 make[1]: вход в каталог «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
-Building CXX object CMakeFiles/cmTC_bd957.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_bd957.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_bd957
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bd957.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_bd957.dir/feature_tests.cxx.o  -o cmTC_bd957 
+Building CXX object CMakeFiles/cmTC_72f1e.dir/feature_tests.cxx.o
+/usr/bin/x86_64-linux-gnu-g++-7    -std=c++14 -o CMakeFiles/cmTC_72f1e.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_72f1e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72f1e.dir/link.txt --verbose=1
+/usr/bin/x86_64-linux-gnu-g++-7       -rdynamic CMakeFiles/cmTC_72f1e.dir/feature_tests.cxx.o  -o cmTC_72f1e 
 make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
 
 
@@ -288,14 +288,14 @@ make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_s
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_7dc63/fast"
-/usr/bin/make -f CMakeFiles/cmTC_7dc63.dir/build.make CMakeFiles/cmTC_7dc63.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_16b70/fast"
+/usr/bin/make -f CMakeFiles/cmTC_16b70.dir/build.make CMakeFiles/cmTC_16b70.dir/build
 make[1]: вход в каталог «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
-Building CXX object CMakeFiles/cmTC_7dc63.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_7dc63.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_7dc63
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7dc63.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_7dc63.dir/feature_tests.cxx.o  -o cmTC_7dc63 
+Building CXX object CMakeFiles/cmTC_16b70.dir/feature_tests.cxx.o
+/usr/bin/x86_64-linux-gnu-g++-7    -std=c++11 -o CMakeFiles/cmTC_16b70.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_16b70
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_16b70.dir/link.txt --verbose=1
+/usr/bin/x86_64-linux-gnu-g++-7       -rdynamic CMakeFiles/cmTC_16b70.dir/feature_tests.cxx.o  -o cmTC_16b70 
 make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
 
 
@@ -361,14 +361,14 @@ make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_s
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_cc17b/fast"
-/usr/bin/make -f CMakeFiles/cmTC_cc17b.dir/build.make CMakeFiles/cmTC_cc17b.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_fca5f/fast"
+/usr/bin/make -f CMakeFiles/cmTC_fca5f.dir/build.make CMakeFiles/cmTC_fca5f.dir/build
 make[1]: вход в каталог «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
-Building CXX object CMakeFiles/cmTC_cc17b.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_cc17b.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_cc17b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cc17b.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_cc17b.dir/feature_tests.cxx.o  -o cmTC_cc17b 
+Building CXX object CMakeFiles/cmTC_fca5f.dir/feature_tests.cxx.o
+/usr/bin/x86_64-linux-gnu-g++-7    -std=c++98 -o CMakeFiles/cmTC_fca5f.dir/feature_tests.cxx.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_fca5f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fca5f.dir/link.txt --verbose=1
+/usr/bin/x86_64-linux-gnu-g++-7       -rdynamic CMakeFiles/cmTC_fca5f.dir/feature_tests.cxx.o  -o cmTC_fca5f 
 make[1]: выход из каталога «/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build/CMakeFiles/CMakeTmp»
 
 
