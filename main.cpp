@@ -3,8 +3,8 @@
 #include <cstring>
 #include <math.h>
 #include <fstream>
-#include <bitset>  
-#include <iomanip> 
+#include <bitset>
+#include <iomanip>
 #include <iterator>
 #include <vector>
 #include <cmath>
@@ -187,33 +187,36 @@ bool crc_chek(const uint8_t *data, rtcm1019_pack *pack)
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 
-struct sattelite {
+struct sattelite
+{
 public:
     int prn;
     TVector ecef; //координаты в ECEF
-    sattelite() : ecef(3) {};
-    double C1,    //псевдодальность [м]
-    dt,           //оценка времени полета сигнала
-    dT,           //сдвиг часов [мкс]
-    P1;           //псевдодальность с коррекцией часов
+    sattelite() : ecef(3){};
+    double C1, //псевдодальность [м]
+        dt,    //оценка времени полета сигнала
+        dT,    //сдвиг часов [мкс]
+        P1;    //псевдодальность с коррекцией часов
 };
 
-class vec3 {
+class vec3
+{
 public:
     TVector xyz;
-    vec3() : xyz(3) {};
+    vec3() : xyz(3){};
 };
 
 const double C = 299792458; // скорость света [м/с]
 
 //точка
-TVector P (3);
+TVector P(3);
 
 //спутники
 const int sat_num = 5;
 sattelite sats[sat_num];
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
     /* 1019 */
     // open file
@@ -325,7 +328,8 @@ int main(int argc, char *argv[]) {
         rtcm02_msg[i].C1 = rtcm02_msg[i].L1_pseudorange * 0.02 + rtcm02_msg[i].L1_ambiguity * light_speed_m;
     }
 
-    for (int i = 0; i < sat_num; i++) {
+    for (int i = 0; i < sat_num; i++)
+    {
         sats[i].prn = rtcm02_msg[i].satellite_id;
     }
 
@@ -337,14 +341,15 @@ int main(int argc, char *argv[]) {
     res[4] = algorithm(rtcm_msg[5], rtcm02_msg[2], tow);
 
     //ecef
-    for (int i = 0; i < sat_num; i++) {
+    for (int i = 0; i < sat_num; i++)
+    {
         sats[i].prn = res[i].sat_id;
         sats[i].ecef[0] = res[i].x;
         sats[i].ecef[1] = res[i].y;
         sats[i].ecef[2] = res[i].z;
     }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------------------------------------------------------
 
     //координаты
     P[0] = 0;
@@ -358,7 +363,7 @@ int main(int argc, char *argv[]) {
     sats[3].C1 = rtcm02_msg[1].C1; //1
     sats[4].C1 = rtcm02_msg[2].C1; //2
 
- /*   //сдвиг часов [мкс]
+    /*   //сдвиг часов [мкс]
     sats[0].dT = -50.014071;
     sats[1].dT = -148.368549;
     sats[2].dT = 526.543696;
@@ -371,17 +376,20 @@ int main(int argc, char *argv[]) {
     double Rdcv = 0;
 
     //последовательные приближения
-    for (uint8_t it = 0; it < 8; it++) {
+    for (uint8_t it = 0; it < 8; it++)
+    {
 
-        TMatrix H (sat_num,4);
+        TMatrix H(sat_num, 4);
 
         vec3 r[sat_num];
-        for (int i = 0; i < sat_num; i++) {
+        for (int i = 0; i < sat_num; i++)
+        {
             r[i].xyz = sats[i].ecef - P;
-            for (int j = 0; j < 3; j++) {
-                H(i, j) = - r[i].xyz[j] / r[i].xyz.length();
+            for (int j = 0; j < 3; j++)
+            {
+                H(i, j) = -r[i].xyz[j] / r[i].xyz.length();
             }
-            H(i, 3) = 1;    //поправка в метрах и считать сразу с*deltaT
+            H(i, 3) = 1; //поправка в метрах и считать сразу с*deltaT
         }
 
         //матрица невязок
@@ -402,30 +410,32 @@ int main(int argc, char *argv[]) {
         vec3 e[sat_num];
 
         //скорость изменения дальности
-        //TVector Vr(6);
+        TVector Vr(6);
 
-        for (int i = 0; i < sat_num; i++) {
-            sats[i].P1 = sats[i].C1 + sats[i].dT*(C / 1000000); // - Rdcv;
-            sats[i].dt = sats[i].P1 / C; //время полета сигнала
+        for (int i = 0; i < sat_num; i++)
+        {
+            sats[i].P1 = sats[i].C1 + sats[i].dT * (C / 1000000); // - Rdcv;
+            sats[i].dt = sats[i].P1 / C;                          //время полета сигнала
 
             R[i].xyz = sats[i].ecef - P;
             e[i].xyz = R[i].xyz.norm();
 
-            double b = (Ve*R[i].xyz) / R[i].xyz.length();
+            double b = (Ve * R[i].xyz) / R[i].xyz.length();
 
-            //Vr[i] = sats[i].D1*0.1902 - b;
+            Vr[i] = /*sats[i].D1*0.1902*/ 0 - b;
 
-            if (i == sat_num) cout << endl;
+            if (i == sat_num)
+                cout << endl;
 
-            V(i, 0) = sats[i].P1 - (R[i].xyz.length() /*+ Vr[i]*sats[i].dt*/);
+            V(i, 0) = sats[i].P1 - (R[i].xyz.length() + Vr[i] * sats[i].dt);
         }
 
         //MHK: dV = (H^t * H)^(-1) * H^t * V
         TMatrix Ht = H.t();
-        TMatrix HtH = Ht*H;
+        TMatrix HtH = Ht * H;
 
         TMatrix Q = !HtH;
-        TMatrix dV = Q*Ht*V;
+        TMatrix dV = Q * Ht * V;
 
         //вычисление поправки
         double dx = dV(0, 0);
@@ -438,10 +448,12 @@ int main(int argc, char *argv[]) {
         P[1] += dy;
         P[2] += dz;
 
-        if ( sqrt(dx*dx + dy*dy + dz*dz) < 0.00001 ) {
+        if (sqrt(dx * dx + dy * dy + dz * dz) < 0.00001)
+        {
             break;
         }
-        else {
+        else
+        {
             cout << "calc . . . x" << int(it) + 1 << endl;
         }
 
@@ -457,29 +469,38 @@ int main(int argc, char *argv[]) {
     }
 
     //широта (ф)
-    double lat = asin( P[2] / P.length() );
+    double lat = asin(P[2] / P.length());
     //долгота
     double lon = atan2(P[1], P[0]);
 
-    cout << endl << "широта: " << lat << endl << "долгота: " << lon << endl;
+    cout << endl
+         << "широта: " << lat << endl
+         << "долгота: " << lon << endl;
 
     //матрица перехода из ECEF в ENU
-    TMatrix ENU (3, 3);
-    ENU(0, 0) = -sin(lon);          ENU(0, 1) = cos(lon);           ENU(0, 2) = 0;
-    ENU(1, 0) = -sin(lat)*cos(lon); ENU(1, 1) = -sin(lat)*sin(lon); ENU(1, 2) = cos(lat);
-    ENU(2, 0) = cos(lat)*cos(lon);  ENU(2, 1) = cos(lat)*sin(lon);  ENU(2, 2) = sin(lat);
+    TMatrix ENU(3, 3);
+    ENU(0, 0) = -sin(lon);
+    ENU(0, 1) = cos(lon);
+    ENU(0, 2) = 0;
+    ENU(1, 0) = -sin(lat) * cos(lon);
+    ENU(1, 1) = -sin(lat) * sin(lon);
+    ENU(1, 2) = cos(lat);
+    ENU(2, 0) = cos(lat) * cos(lon);
+    ENU(2, 1) = cos(lat) * sin(lon);
+    ENU(2, 2) = sin(lat);
 
     cout << endl;
-    for (int i = 0; i < sat_num; i++) {
+    for (int i = 0; i < sat_num; i++)
+    {
         TVector e = (sats[i].ecef - P).norm();
         TVector e_enu = ENU * e;
         double az = atan2(e_enu[0], e_enu[1]);
         double el = asin(e_enu[2]);
 
-        cout << sats[i].prn << ":   az = " << int(az*180/pi) << "    el = " << int(el*180/pi) << endl;
+        cout << sats[i].prn << ":   az = " << float(az * 180 / pi) << "    el = " << float(el * 180 / pi) << endl;
     }
 
-    //ошибка
+     //ошибка
     TVector approx_pos (3);
     approx_pos[0] = 2849830.5060;
     approx_pos[1] = 2186822.2813;
@@ -487,11 +508,15 @@ int main(int argc, char *argv[]) {
 
     TVector error = P - approx_pos;
 
-    //cout << endl << "ошибка = " << error.length() << endl << endl;
+    cout << P[0] << endl << P[1] << endl << P[2] << endl;
+
+    cout << "ошибка по x = " << error[0] << endl;
+    cout << "ошибка по y = " << error[1] << endl;
+    cout << "ошибка по z = " << error[2] << endl;
+    cout << endl << "ошибка = " << error.length() << endl << endl; 
 
     return 0;
 }
-
 
 void read_rtcmPack(const uint8_t *data, rtcm1019_pack *pack)
 {
@@ -540,7 +565,7 @@ xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow)
     xyz_coord result;
     result.sat_id = pack02.satellite_id;
     //поправка по времени
-    double t = tow - pack02.C1/C;
+    double t = tow - pack02.C1 / C;
     double dTs = t - pack19.t_oc;
     for (int i = 0; i < 2; i++)
     {
@@ -548,8 +573,10 @@ xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow)
     }
     dTs = pack19.a_f0 + pack19.a_f1 * dTs + pack19.a_f2 * dTs * dTs;
 
-    for (int i = 0; i < 5; i++) {
-        if (sats[i].prn == result.sat_id) {
+    for (int i = 0; i < 5; i++)
+    {
+        if (sats[i].prn == result.sat_id)
+        {
             sats[i].dT = dTs;
         }
     }
@@ -561,8 +588,8 @@ xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow)
     double tk = tbias - pack19.t_oe;
 
     double A = pow(pack19.A_sqrt, 2);
-    double n0 = sqrt(GM / pow(A, 3));  //Computed mean motion
-    double n = n0 + pack19.delta_n; //Corrected mean motion
+    double n0 = sqrt(GM / pow(A, 3)); //Computed mean motion
+    double n = n0 + pack19.delta_n;   //Corrected mean motion
 
     double M = pack19.M0 + n * tk; //Mean anomaly 0.14682866 rad
 
@@ -574,8 +601,8 @@ xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow)
         E = M + pack19.e * sin(Ek);
     }
 
-    double v = atan2(sqrt(1.0 - pack19.e*pack19.e)*sin(E), cos(E) - pack19.e);      //true anomaly
-    double Fi = v + pack19.omega; // v + omega
+    double v = atan2(sqrt(1.0 - pack19.e * pack19.e) * sin(E), cos(E) - pack19.e); //true anomaly
+    double Fi = v + pack19.omega;                                                  // v + omega
 
     double du = pack19.c_uc * cos(2 * Fi) + pack19.c_us * sin(2 * Fi);
     double u = Fi + du; //argument of latitude
