@@ -510,7 +510,7 @@ int main(int argc, char *argv[])
 
     cout << P[0] << endl << P[1] << endl << P[2] << endl;
 
-    cout << "ошибка по x = " << error[0] << endl;
+    cout << "ошибка по x = " << error[0] << endl; //
     cout << "ошибка по y = " << error[1] << endl;
     cout << "ошибка по z = " << error[2] << endl;
     cout << endl << "ошибка = " << error.length() << endl << endl; 
