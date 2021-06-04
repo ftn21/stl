@@ -1,12 +1,12 @@
 [
 {
   "directory": "/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build",
-  "command": "/usr/bin/x86_64-linux-gnu-g++-7    -g   -std=gnu++11 -o CMakeFiles/linalg.dir/linalg.cpp.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/linalg.cpp",
+  "command": "/usr/bin/c++    -g   -std=gnu++11 -o CMakeFiles/linalg.dir/linalg.cpp.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/linalg.cpp",
   "file": "/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/linalg.cpp"
 },
 {
   "directory": "/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/build",
-  "command": "/usr/bin/x86_64-linux-gnu-g++-7    -g   -std=gnu++11 -o CMakeFiles/main.dir/main.cpp.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/main.cpp",
+  "command": "/usr/bin/c++    -g   -std=gnu++11 -o CMakeFiles/main.dir/main.cpp.o -c /home/ftn21/Documents/MAI/6sem/app_sredstva/stl/main.cpp",
   "file": "/home/ftn21/Documents/MAI/6sem/app_sredstva/stl/main.cpp"
 }
 ]
