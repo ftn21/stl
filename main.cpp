@@ -460,7 +460,7 @@ int main(int argc, char *argv[])
 
             R[i].xyz = sats_static[i].ecef - P;
             cout << i << ":  " << R[i].xyz[0] << "  ,   " << R[i].xyz[1] << "  ,   " << R[i].xyz[2] << "  ;   " << endl;
-            //e[i].xyz = R[i].xyz.norm();
+            //e[i].xyz = R[i].xyz.norm(); //строка - убийца программы
 
             double b = (Ve * R[i].xyz) / R[i].xyz.length();
 
