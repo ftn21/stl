@@ -9,6 +9,7 @@
 #include <vector>
 #include <cmath>
 
+// константы
 #define pi 3.1415926535897932
 #define GM 398600500000000    //GM = 3.986005*10^14 [m^3 /s^2]
 #define omega_e 0.00007292115 //value of the Earth’s rotation rate
@@ -19,6 +20,7 @@ using namespace std;
 using namespace MyLinearAlgebra;
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
+// структура для хранения пакета rtcm1019
 typedef struct RTCM1019_STRUCTURE
 {
     /* header | 24  bits */
@@ -63,6 +65,7 @@ typedef struct RTCM1019_STRUCTURE
     int32_t parity; //      | 24  bits
 } rtcm1019_pack;
 
+// структура для хранения пакета rtcm1002
 typedef struct RTCM1002_STRUCTURE
 {
     /* data */
@@ -73,6 +76,7 @@ typedef struct RTCM1002_STRUCTURE
     double C1; // L1_pseudorange + L1_ambiguity
 } rtcm1002_pack;
 
+// структура для координат спутника + его id 
 typedef struct XYZ_COORD
 {
     uint8_t sat_id;
@@ -81,6 +85,7 @@ typedef struct XYZ_COORD
     double z;
 } xyz_coord;
 
+// для crc-проверки целостности данных
 const uint32_t tbl_CRC24Q[] = {
     0x000000, 0x864CFB, 0x8AD50D, 0x0C99F6, 0x93E6E1, 0x15AA1A, 0x1933EC, 0x9F7F17,
     0xA18139, 0x27CDC2, 0x2B5434, 0xAD18CF, 0x3267D8, 0xB42B23, 0xB8B2D5, 0x3EFE2E,
@@ -128,22 +133,27 @@ uint32_t crc24q(const uint8_t *buff, int32_t len)
     return crc;
 }
 
+// считывание беззнакового числа
 uint32_t bit32u(const uint8_t *buff, int32_t pos, int32_t len)
 {
     uint32_t bits = 0;
-    for (int32_t i = pos; i < pos + len; i++)
+    for (int32_t i = pos; i < pos + len; i++) {
         bits = (bits << 1) + ((buff[i / 8] >> (7 - i % 8)) & 1u);
+    }
     return bits;
 }
 
+// считывания числа со знаком
 int32_t bit32s(const uint8_t *buff, int32_t pos, int32_t len)
 {
     uint32_t bits = bit32u(buff, pos, len);
-    if (len <= 0 || 32 <= len || !(bits & (1u << (len - 1))))
+    if (len <= 0 || 32 <= len || !(bits & (1u << (len - 1)))) {
         return int32_t(bits);
+    }
     return int(bits | (~0u << len)); /* extend sign */
 }
 
+// проверка на то, является ли пакет rtcm-пакетом
 bool is_rtcm3(const uint8_t *data, int32_t &data_size, uint32_t &tp)
 {
 
@@ -167,8 +177,10 @@ bool is_rtcm3(const uint8_t *data, int32_t &data_size, uint32_t &tp)
     return tp > 0;
 }
 
+// считывание rtcm-пакета
 void read_rtcmPack(const uint8_t *data, rtcm1019_pack *pack);
 
+// crc-проверка целостности данных
 bool crc_chek(const uint8_t *data, rtcm1019_pack *pack)
 {
     int32_t crc_pos = 24 + 8 * pack->length;
@@ -186,6 +198,7 @@ bool crc_chek(const uint8_t *data, rtcm1019_pack *pack)
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 
+// структура для одного спутника
 struct sattelite
 {
 public:
@@ -198,6 +211,7 @@ public:
     double P1; //псевдодальность с коррекцией часов
 };
 
+// вектор координат 
 class vec3
 {
 public:
@@ -205,33 +219,33 @@ public:
     vec3() : xyz(3){};
 };
 
-const double C = 299792458; // скорость света [м/с]
+const double C = 299792458;  // скорость света [м/с]
 
-TVector P(3); //точка
+TVector P(3);  // вектор координат точки, которую мы аппроксимируем последовательными приближениями
 
-sattelite *sats;
+sattelite *sats;  // динамический массив спутников
 
+// функция рассчета координат в ECEF
 xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow, int st_num, sattelite *sats_arr);
 
 int main(int argc, char *argv[])
 {
 
     /* 1019 */
-    // open file
-    //string fname = "/home/ftn21/Documents/MAI/6sem/app_sredstva/sources/16.04.2021/1019.rtcm";
-    string fname = "/home/ftn21/dir/eph.rtcm";
+    // считвание файла с пакетом rtcm1019
+    string fname = "/home/ftn21/Documents/MAI/6sem/app_sredstva/sources/16.04.2021/1019.rtcm";
     ifstream rtcm_st6;
     rtcm_st6.open(fname, ios::binary);
     int rtcm19_filelength = 0;
 
-    // ?open
+    // проверка на корректное открытие файла
     if (!rtcm_st6.is_open())
     {
         cout << "error opening " << fname << endl;
     }
     else
     {
-        // get length of file:
+        // получить размер файла:
         rtcm_st6.seekg(0, rtcm_st6.end);
         rtcm19_filelength = rtcm_st6.tellg();
         rtcm_st6.seekg(0, rtcm_st6.beg);
@@ -240,7 +254,7 @@ int main(int argc, char *argv[])
              << endl;
     }
 
-    // read rtcm1019 data
+    // считывание данных из файла
     vector<uint8_t> buf(istreambuf_iterator<char>(rtcm_st6), {});
 
     int32_t s = 67;
@@ -260,7 +274,7 @@ int main(int argc, char *argv[])
 
     rtcm1019_pack *rtcm19_msg = new rtcm1019_pack[rtcm19_num];
 
-    //чтение пакетов retcm19
+    //чтение пакетов rtcm19
     int rtcm19_count = 0;
     for (int j = 0; j < (rtcm19_filelength - 66); j++)
     {
@@ -286,21 +300,20 @@ int main(int argc, char *argv[])
     }
 
     /* 1002 */
-    // open file
-    //string fname1002 = "/home/ftn21/Documents/MAI/6sem/app_sredstva/sources/16.04.2021/1002.rtcm";
-    string fname1002 = "/home/ftn21/dir/obs.rtcm";
+    // считвание файла с пакетом rtcm1002
+    string fname1002 = "/home/ftn21/Documents/MAI/6sem/app_sredstva/sources/16.04.2021/1002.rtcm";
     ifstream rtcm02_st6;
     rtcm02_st6.open(fname1002, ios::binary);
     int rtcm02_filelength = 0;
 
-    // ?open
+    // проверка на корректное открытие файла
     if (!rtcm02_st6.is_open())
     {
         cout << "error opening " << fname << endl;
     }
     else
     {
-        // get length of file:
+        // получить размер файла
         rtcm02_st6.seekg(0, rtcm02_st6.end);
         rtcm02_filelength = rtcm02_st6.tellg();
         rtcm02_st6.seekg(0, rtcm02_st6.beg);
@@ -308,7 +321,7 @@ int main(int argc, char *argv[])
              << endl;
     }
 
-    // read data
+    // чтение данных
     vector<uint8_t> buf02(istreambuf_iterator<char>(rtcm02_st6), {});
     int32_t s02 = 74;
     uint32_t c02 = 1002;
@@ -328,11 +341,11 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* header | 24  bits*/
+    /* заголовок | 24  bits*/
     int32_t preamble02 = bit32u(&buf02[i_1002], 0, 8);
     int32_t length02 = bit32u(&buf02[i_1002], 14, 10);
 
-    /* common data | 64  bits*/
+    /* данные | 64  bits*/
     uint32_t msg_num = bit32u(&buf02[i_1002], 24, 12);
     uint32_t sta_id = bit32u(&buf02[i_1002], 36, 12);
     uint32_t tow = bit32u(&buf02[i_1002], 48, 30) / 1000;
@@ -371,13 +384,6 @@ int main(int argc, char *argv[])
             }
         }
     }
-/*
-    res[0] = algorithm(rtcm19_msg[0], rtcm02_msg[3], tow, sat_num, sats);
-    res[1] = algorithm(rtcm19_msg[1], rtcm02_msg[5], tow, sat_num, sats);
-    res[2] = algorithm(rtcm19_msg[3], rtcm02_msg[0], tow, sat_num, sats);
-    res[3] = algorithm(rtcm19_msg[4], rtcm02_msg[1], tow, sat_num, sats);
-    res[4] = algorithm(rtcm19_msg[5], rtcm02_msg[2], tow, sat_num, sats);
-    res[5] = algorithm(rtcm19_msg[6], rtcm02_msg[4], tow, sat_num, sats);*/
 
     //ecef
     for (int i = 0; i < sat_num; i++)
@@ -396,7 +402,7 @@ int main(int argc, char *argv[])
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------
 
-    //координаты
+    // координаты точки приёмника, которые ищем методом последовательных приближений
     P[0] = 0;
     P[1] = 0;
     P[2] = 0;
@@ -409,12 +415,13 @@ int main(int argc, char *argv[])
         sats_static[i] = sats[i];
         cout << i << "  " << "ecef: " << sats_static[i].ecef[0] << "  " << sats_static[i].ecef[1] << sats_static[i].ecef[2] << "  ";
     }
+    // очистка памяти
     delete [] sats;
 
     delete [] rtcm19_msg;
     delete [] rtcm02_msg;
 
-    //последовательные приближения
+    // последовательные приближения
     for (uint8_t it = 0; it < 8; it++)
     {
 
@@ -428,15 +435,14 @@ int main(int argc, char *argv[])
             for (int j = 0; j < 3; j++)
             {
                 H(i, j) = -r[i].xyz[j] / r[i].xyz.length();
-                //cout << i << ", " << j << " : " << H(i,j) << "    ";
             }
-            H(i, 3) = 1; //поправка в метрах и считать сразу с*deltaT
+            H(i, 3) = 1; // поправка в метрах и считать сразу с*deltaT
         }
 
-        //матрица невязок
+        // матрица невязок
         TMatrix V(sat_num, 1);
 
-        //вращение приемника вместе с землёй
+        // вращение приемника вместе с землёй
         TVector V_e(3);
         TVector Ve(3);
         V_e[0] = 0;
@@ -444,19 +450,19 @@ int main(int argc, char *argv[])
         V_e[2] = 7.2921151467 / 100000;
         Ve = V_e ^ P;
 
-        //расстояние приемник-спутник
+        // расстояние приемник-спутник
         vec3 R[sat_num];
 
-        //нормаль на спутник
+        // нормаль на спутник
         vec3 e[sat_num];
 
-        //скорость изменения дальности
+        // скорость изменения дальности
         TVector Vr(sat_num);
 
         for (int i = 0; i < sat_num; i++)
         {
             sats_static[i].P1 = sats_static[i].C1 + sats_static[i].dT * (C / 1000000) - Rdcv;
-            sats_static[i].dt = sats_static[i].P1 / C;                          //время полета сигнала
+            sats_static[i].dt = sats_static[i].P1 / C;   // время полета сигнала
 
             R[i].xyz = sats_static[i].ecef - P;
             cout << i << ":  " << R[i].xyz[0] << "  ,   " << R[i].xyz[1] << "  ,   " << R[i].xyz[2] << "  ;   " << endl;
@@ -464,7 +470,7 @@ int main(int argc, char *argv[])
 
             double b = (Ve * R[i].xyz) / R[i].xyz.length();
 
-            Vr[i] = /*sats_static[i].D1*0.1902*/ 0 - b;
+            Vr[i] = /*sats_static[i].D1*0.1902*/ 0 - b; // считаем доплера без доплера, не уверена, на сколько корректно
 
             if (i == sat_num)
                 cout << endl;
@@ -491,29 +497,32 @@ int main(int argc, char *argv[])
         P[1] += dy;
         P[2] += dz;
 
-        if (sqrt(dx * dx + dy * dy + dz * dz) < 0.00001)
+        if (sqrt(dx * dx + dy * dy + dz * dz) < 0.00001)  // если выполняется условие по точности
         {
-            break;
+            break; // прекращаем последовательные приближения
         }
         else
         {
-            cout << "calc . . . x" << int(it) + 1 << endl;
+            cout << "calc . . . x" << int(it) + 1 << endl; // номер итерации
         }
 
+        // правильные координаты приёмника. те координаты, с которыми нужно сравнить
+        // те, что мы высчитвали последовательными приближениями
         TVector approx_pos (3);
         approx_pos[0] = 2849830.5060;
         approx_pos[1] = 2186822.2813;
         approx_pos[2] = 5252937.0124;
 
+        // как раз сравниваем и считаем ошибку на каждой итерации
         TVector error = P - approx_pos;
 
         cout << "ошибка = " << error.length() << endl;
         
     }
 
-    //широта (ф)
+    //широта (фи)
     double lat = asin(P[2] / P.length());
-    //долгота
+    //долгота (лямбда)
     double lon = atan2(P[1], P[0]);
 
     cout << endl
@@ -532,6 +541,7 @@ int main(int argc, char *argv[])
     ENU(2, 1) = cos(lat) * sin(lon);
     ENU(2, 2) = sin(lat);
 
+    // перевод ECEF->ENU и рассчет азимута и элевации
     cout << endl;
     for (int i = 0; i < sat_num; i++)
     {
@@ -543,15 +553,15 @@ int main(int argc, char *argv[])
         cout << sats_static[i].prn << ":   az = " << float(az * 180 / pi) << "    el = " << float(el * 180 / pi) << endl;
     }
 
-    //ошибка
+    // правильные координаты приёмника. те координаты, с которыми нужно сравнить
+    // те, что мы высчитвали последовательными приближениями
     TVector approx_pos(3);
     approx_pos[0] = 2849830.5060;
     approx_pos[1] = 2186822.2813;
     approx_pos[2] = 5252937.0124;
 
+    // как раз сравниваем и считаем итоговую ошибку
     TVector error = P - approx_pos;
-
-    //cout << P[0] << endl << P[1] << endl << P[2] << endl;
 
     cout << endl
          << "ошибка по x = " << error[0] << endl; //
@@ -560,9 +570,11 @@ int main(int argc, char *argv[])
     cout << endl
          << "ошибка = " << error.length() << endl;
 
-    return 0;
+    //return 0;
 }
 
+
+// реализация функций, объявленных в начале кода
 void read_rtcmPack(const uint8_t *data, rtcm1019_pack *pack)
 {
 
@@ -645,7 +657,7 @@ xyz_coord algorithm(rtcm1019_pack pack19, rtcm1002_pack pack02, double tow, int 
         Ek = E;
         E = M + pack19.e * sin(Ek);
     }
-    Ek = E; //но это не точно.
+    Ek = E;
 
     double v = atan2(sqrt(1.0 - pack19.e * pack19.e) * sin(E), cos(E) - pack19.e); //true anomaly
     double Fi = v + pack19.omega;                                                  // v + omega
