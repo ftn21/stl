@@ -8,9 +8,9 @@
 
 Как собрать и запустить проект?
 -------------------------------
-1. уставновить visual studio code
-2. установить cmake
-3. установить компилятор для c++ (я для линукса использую GDB)
+1. уставновить visual studio code.
+2. установить cmake.
+3. установить компилятор для c++ (я для линукса использую GDB).
 4. в visual studio code установить расширения: 
 	- C/C++	(ms-vscode.cpptools), ссылка на Visual Studio Marketplace: 
 	https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools
@@ -18,10 +18,12 @@
 	https://marketplace.visualstudio.com/items?itemName=twxs.cmake
 	- CMake Tools (ms-vscode.cmake-tools), ссылка на Visual Studio Marketplace: 
 	https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools
-5. открыть папку с проектом в vscode
-6. нажать ctrl+shift+B (собрать проект)
-7. выбрать во всплывающем окне: [Unspecified] Unspecified (Let Cmake guess what compilers and environment to use)
-![alt text](unspec.png "скриншот всплывающего окна")
+5. открыть папку с проектом в vscode.
+6. нажать ctrl+shift+B (собрать проект).
+7. выбрать во всплывающем окне: [Unspecified] Unspecified (Let Cmake guess what compilers and environment to use).
+![alt text](screenshots/unspec.png "скриншот всплывающего окна")
+8. можно запускать.
+![alt text](screenshots/launch.png "запуск")
 
 main.cpp
 --------
