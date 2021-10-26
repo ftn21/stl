@@ -23,6 +23,7 @@
 7. выбрать во всплывающем окне: [Unspecified] Unspecified (Let Cmake guess what compilers and environment to use).
 ![alt text](screenshots/unspec.png "скриншот всплывающего окна")
 8. можно запускать.
+
 ![alt text](screenshots/launch.png "запуск")
 
 main.cpp
