@@ -21,7 +21,7 @@
 5. открыть папку с проектом в vscode
 6. нажать ctrl+shift+B (собрать проект)
 7. выбрать во всплывающем окне: [Unspecified] Unspecified (Let Cmake guess what compilers and environment to use)
-unspec.png
+![alt text](unspec.png "скриншот всплывающего окна")
 
 main.cpp
 --------
